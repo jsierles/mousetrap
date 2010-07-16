@@ -116,6 +116,7 @@ module Mousetrap
       :credit_card_expiration_date,
       :credit_card_last_four_digits,
       :credit_card_type,
+      :credit_card_verification_code,
       :items,
       :invoices
 
