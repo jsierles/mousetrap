@@ -61,7 +61,9 @@ module Mousetrap
         :email      => email,
         :first_name => first_name,
         :last_name  => last_name,
-        :company    => company
+        :company    => company,
+        :charges    => charges,
+        :items      => items
       }
     end
 
