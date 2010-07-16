@@ -7,7 +7,9 @@ module Mousetrap
       :first_name,
       :last_name,
       :company,
-      :subscription
+      :subscription,
+      :charges,
+      :items
 
     def update_tracked_item_quantity(item_code, quantity = 1)
       tracked_item_resource = if quantity == quantity.abs
@@ -22,6 +24,7 @@ module Mousetrap
       }
 
       response = self.class.put_resource 'customers', tracked_item_resource, code, attributes
+
       raise response['error'] if response['error']
       response
     end
@@ -152,6 +155,9 @@ module Mousetrap
         :lastName  => attributes[:last_name],
         :company   => attributes[:company]
       }
+
+      mutated_hash.merge!(:charges => attributes[:charges]) if attributes[:charges]
+      mutated_hash.merge!(:items => attributes[:items]) if attributes[:items]
       mutated_hash.merge!(:code => attributes[:code]) if new_record
       mutated_hash
     end
