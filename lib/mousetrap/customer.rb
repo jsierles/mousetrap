@@ -33,7 +33,7 @@ module Mousetrap
       update_tracked_item_quantity(item_code, quantity)
     end
 
-    def remove_item_quantity(item, quantity = 1)
+    def remove_item_quantity(item_code, quantity = 1)
       update_tracked_item_quantity(item_code, -quantity)
     end
 
