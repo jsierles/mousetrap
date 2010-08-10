@@ -10,6 +10,7 @@ describe Mousetrap::Customer do
       :email => customer.email,
       :company => customer.company,
       :code => customer.code,
+      :notes => customer.notes,
       :subscription => {
         :planCode     => customer.subscription.plan_code,
         :ccFirstName  => customer.subscription.billing_first_name,
@@ -94,7 +95,8 @@ describe Mousetrap::Customer do
         :first_name => 'Jon',
         :last_name => 'Larkowski',
         :email => 'lark@example.com',
-        :code => 'asfkhw0'
+        :code => 'asfkhw0',
+        :notes => 'Lorem ipsum dolor'
     end
 
     it { should be_instance_of(Mousetrap::Customer) }
@@ -115,6 +117,10 @@ describe Mousetrap::Customer do
 
       it 'code' do
         subject.code.should == 'asfkhw0'
+      end
+
+      it 'notes' do
+        subject.notes.should == 'Lorem ipsum dolor'
       end
     end
   end

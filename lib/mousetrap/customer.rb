@@ -7,6 +7,7 @@ module Mousetrap
       :first_name,
       :last_name,
       :company,
+      :notes,
       :subscription,
       :charges,
       :items
@@ -62,6 +63,7 @@ module Mousetrap
         :first_name => first_name,
         :last_name  => last_name,
         :company    => company,
+        :notes      => notes,
         :charges    => charges,
         :items      => items
       }
@@ -155,7 +157,8 @@ module Mousetrap
         :email     => attributes[:email],
         :firstName => attributes[:first_name],
         :lastName  => attributes[:last_name],
-        :company   => attributes[:company]
+        :company   => attributes[:company],
+        :notes     => attributes[:notes]
       }
 
       mutated_hash.merge!(:charges => attributes[:charges]) if attributes[:charges]
@@ -171,7 +174,8 @@ module Mousetrap
         :first_name => attributes['firstName'],
         :last_name  => attributes['lastName'],
         :company    => attributes['company'],
-        :email      => attributes['email']
+        :email      => attributes['email'],
+        :notes      => attributes['notes']
       }
     end
 
