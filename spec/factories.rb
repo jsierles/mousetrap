@@ -19,6 +19,7 @@ Factory.define :subscription, :class => Mousetrap::Subscription, :default_strate
   f.credit_card_number '4111111111111111'
   f.credit_card_expiration_month '12'
   f.credit_card_expiration_year '2012'
+  f.credit_card_code '123'
   f.billing_address "400 W 7th St\n#200"
   f.billing_city 'Bloomington'
   f.billing_state 'IN'
@@ -30,5 +31,6 @@ Factory.define :alternate_subscription, :parent => :subscription, :default_strat
   f.credit_card_number '5555555555554444'
   f.credit_card_expiration_month '7'
   f.credit_card_expiration_year '2013'
+  f.credit_card_code '456'
   f.billing_zip_code '12345'
 end

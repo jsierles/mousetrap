@@ -17,6 +17,7 @@ describe Mousetrap::Customer do
         :ccNumber     => customer.subscription.credit_card_number,
         :ccExpMonth   => customer.subscription.credit_card_expiration_month,
         :ccExpYear    => customer.subscription.credit_card_expiration_year,
+        :ccCardCode   => customer.subscription.credit_card_code,
         :ccZip        => customer.subscription.billing_zip_code,
         :ccCountry    => customer.subscription.billing_country,
         :ccAddress    => customer.subscription.billing_address,
