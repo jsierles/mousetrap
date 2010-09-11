@@ -1,8 +1,6 @@
 require File.expand_path('../../../lib/mousetrap', __FILE__)
 
-require 'spec'
-require 'spec/autorun'
-require 'factory_girl'
+require 'rspec'
 require 'active_support'
 require 'yaml'
 

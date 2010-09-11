@@ -131,7 +131,10 @@ describe Mousetrap::Customer do
     end
 
     it "makes a new customer from the attributes" do
-      Mousetrap::Customer.should_receive(:new).with('some attributes').and_return(stub(:null_object => true))
+      customer = mock
+      customer.stub :update
+      customer.should_receive(:code=).with("some customer code")
+      Mousetrap::Customer.should_receive(:new).with('some attributes').and_return(customer)
       do_update
     end
 
@@ -144,7 +147,8 @@ describe Mousetrap::Customer do
     end
 
     it "calls #update" do
-      customer = mock(:null_object => true)
+      customer = mock
+      customer.should_receive(:code=).with("some customer code")
       Mousetrap::Customer.stub :new => customer
       customer.should_receive :update
       do_update
@@ -360,7 +364,7 @@ describe Mousetrap::Customer do
   #     before do
   #       @customer = Factory(:new_customer)
   #     end
-  # 
+  #
   #     it "should not raise an error with CheddarGetter" do
   #       @customer.class.should_receive(:put_resource).with('customers', 'add-item-quantity', @customer.code, { :quantity => 1, :itemCode => 'BOGUS' }).and_return({ :id => 'some_id' })
   #       @customer.update_tracked_item_quantity('BOGUS', 1).should_not raise_error

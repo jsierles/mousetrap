@@ -1,3 +1,5 @@
+require 'factory_girl'
+
 Factory.define :new_customer, :class => Mousetrap::Customer, :default_strategy => :stub do |f|
   f.email { random_email_address }
   f.first_name { random_string }
