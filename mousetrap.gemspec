@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jon Larkowski", "Sandro Turriate", "Wolfram Arnold", "Corey Grusden"]
-  s.date = %q{2010-08-10}
+  s.date = %q{2010-09-11}
   s.description = %q{CheddarGetter API Client in Ruby}
   s.email = %q{jonlarkowski@gmail.com}
   s.extra_rdoc_files = [
@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "Gemfile",
+     "Gemfile.lock",
      "MIT-LICENSE",
      "README.textile",
      "Rakefile",
@@ -41,7 +43,6 @@ Gem::Specification.new do |s|
      "spec/mousetrap/resource_spec.rb",
      "spec/mousetrap/subscription_spec.rb",
      "spec/mousetrap_spec.rb",
-     "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/support/fixtures.rb",
      "spec/support/random_data.rb"
@@ -72,19 +73,19 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<httparty>, [">= 0.6.1"])
       s.add_development_dependency(%q<activesupport>, [">= 2.3.3"])
-      s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
-      s.add_development_dependency(%q<factory_girl>, [">= 1.2.3"])
+      s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
+      s.add_development_dependency(%q<factory_girl>, ["= 1.2.3"])
     else
       s.add_dependency(%q<httparty>, [">= 0.6.1"])
       s.add_dependency(%q<activesupport>, [">= 2.3.3"])
-      s.add_dependency(%q<rspec>, [">= 1.2.9"])
-      s.add_dependency(%q<factory_girl>, [">= 1.2.3"])
+      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
+      s.add_dependency(%q<factory_girl>, ["= 1.2.3"])
     end
   else
     s.add_dependency(%q<httparty>, [">= 0.6.1"])
     s.add_dependency(%q<activesupport>, [">= 2.3.3"])
-    s.add_dependency(%q<rspec>, [">= 1.2.9"])
-    s.add_dependency(%q<factory_girl>, [">= 1.2.3"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
+    s.add_dependency(%q<factory_girl>, ["= 1.2.3"])
   end
 end
 
