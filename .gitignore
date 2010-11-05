@@ -5,3 +5,6 @@ rdoc
 pkg
 spec/integration/settings.yml
 script/cheddar_getter.yml
+mousetrap_config.yml
+.rvmrc
+.bundle

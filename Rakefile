@@ -1,5 +1,7 @@
-require 'rubygems'
 require 'rake'
+require 'rake/rdoctask'
+require "bundler"
+Bundler.setup
 
 begin
   require 'jeweler'
@@ -12,22 +14,21 @@ begin
     gem.authors = ["Jon Larkowski", "Sandro Turriate", "Wolfram Arnold", "Corey Grusden"]
     gem.add_dependency 'httparty', '>= 0.6.1'
     gem.add_development_dependency "activesupport", '>= 2.3.3'
-    gem.add_development_dependency "rspec", '>= 1.2.9'
-    gem.add_development_dependency 'factory_girl', '>= 1.2.3'
+    gem.add_development_dependency "rspec", '>= 2.0.0.beta.20'
+    gem.add_development_dependency 'factory_girl', '= 1.2.3'
   end
 rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
+  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |spec|
-  spec.spec_opts = ['--options', 'spec/spec.opts']
-  spec.libs << 'lib' << 'spec'
-  spec.spec_files = FileList['spec/**/*_spec.rb']
+require 'rspec'
+require "rspec/core/rake_task"
+Rspec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
 end
 
-Spec::Rake::SpecTask.new(:rcov) do |spec|
-  spec.libs << 'lib' << 'spec'
+Rspec::Core::RakeTask.new(:rcov) do |spec|
+  # spec.libs << 'lib' << 'spec'
   spec.pattern = 'spec/**/*_spec.rb'
   spec.rcov = true
 end
@@ -36,7 +37,6 @@ task :spec => :check_dependencies
 
 task :default => :spec
 
-require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   if File.exist?('VERSION')
     version = File.read('VERSION')

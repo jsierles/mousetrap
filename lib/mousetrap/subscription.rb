@@ -8,6 +8,11 @@ module Mousetrap
       :credit_card_number,
       :credit_card_expiration_month,
       :credit_card_expiration_year,
+      :credit_card_code,
+      :billing_country,
+      :billing_address,
+      :billing_city,
+      :billing_state,
       :billing_zip_code,
       :plan,
 
@@ -20,7 +25,9 @@ module Mousetrap
       :created_at,
       :credit_card_expiration_date,
       :credit_card_last_four_digits,
-      :credit_card_type
+      :credit_card_type,
+      :invoices,
+      :items
 
     def self.[](code)
       raise_api_unsupported_error
@@ -38,6 +45,16 @@ module Mousetrap
       raise_api_unsupported_error
     end
 
+    def current_invoice
+      invoice_attributes = if invoices['invoice'].kind_of?(Array)
+        invoices['invoice'][0]
+      else
+        invoices['invoice']
+      end
+
+      Invoice.new(invoice_attributes)
+    end
+
     def attributes
       {
         :id                           => id,
@@ -47,6 +64,11 @@ module Mousetrap
         :credit_card_number           => credit_card_number,
         :credit_card_expiration_month => credit_card_expiration_month,
         :credit_card_expiration_year  => credit_card_expiration_year,
+        :credit_card_code             => credit_card_code,
+        :billing_country              => billing_country,
+        :billing_address              => billing_address,
+        :billing_city                 => billing_city,
+        :billing_state                => billing_state,
         :billing_zip_code             => billing_zip_code,
       }
     end
@@ -93,7 +115,10 @@ module Mousetrap
       :created_at,
       :credit_card_expiration_date,
       :credit_card_last_four_digits,
-      :credit_card_type
+      :credit_card_type,
+      :credit_card_verification_code,
+      :items,
+      :invoices
 
     def self.plural_resource_name
       'subscriptions'
@@ -111,7 +136,12 @@ module Mousetrap
         :ccNumber     => attributes[:credit_card_number],
         :ccExpMonth   => ("%02d" % attributes[:credit_card_expiration_month] if attributes[:credit_card_expiration_month]),
         :ccExpYear    => attributes[:credit_card_expiration_year],
-        :ccZip        => attributes[:billing_zip_code],
+        :ccCardCode   => attributes[:credit_card_code],
+        :ccCountry    => attributes[:billing_country],
+        :ccAddress    => attributes[:billing_address],
+        :ccCity       => attributes[:billing_city],
+        :ccState      => attributes[:billing_state],
+        :ccZip        => attributes[:billing_zip_code]
       }
     end
 
@@ -123,6 +153,8 @@ module Mousetrap
         :credit_card_expiration_date  => attributes['ccExpirationDate'],
         :credit_card_last_four_digits => attributes['ccLastFour'],
         :credit_card_type             => attributes['ccType'],
+        :invoices                     => attributes['invoices'],
+        :items                        => attributes['items']
       }
     end
   end

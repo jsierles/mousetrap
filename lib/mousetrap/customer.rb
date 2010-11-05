@@ -7,7 +7,49 @@ module Mousetrap
       :first_name,
       :last_name,
       :company,
-      :subscription
+      :notes,
+      :subscription,
+      :charges,
+      :items
+
+    def update_tracked_item_quantity(item_code, quantity = 1)
+      tracked_item_resource = if quantity == quantity.abs
+        'add-item-quantity'
+      else
+        'remove-item-quantity'
+      end
+
+      attributes = {
+        :itemCode => item_code,
+        :quantity => quantity.abs
+      }
+
+      response = self.class.put_resource 'customers', tracked_item_resource, code, attributes
+
+      raise response['error'] if response['error']
+      response
+    end
+
+    def add_item_quantity(item_code, quantity = 1)
+      update_tracked_item_quantity(item_code, quantity)
+    end
+
+    def remove_item_quantity(item_code, quantity = 1)
+      update_tracked_item_quantity(item_code, -quantity)
+    end
+
+    def add_custom_charge(item_code, amount = 1.0, quantity = 1, description = nil)
+      attributes = {
+        :chargeCode  => item_code,
+        :eachAmount  => amount,
+        :quantity    => quantity,
+        :description => description
+      }
+
+      response = self.class.put_resource 'customers', 'add-charge', code, attributes
+      raise response['error'] if response['error']
+      response
+    end
 
     def subscription_attributes=(attributes)
       self.subscription = Subscription.new attributes
@@ -20,7 +62,10 @@ module Mousetrap
         :email      => email,
         :first_name => first_name,
         :last_name  => last_name,
-        :company    => company
+        :company    => company,
+        :notes      => notes,
+        :charges    => charges,
+        :items      => items
       }
     end
 
@@ -112,8 +157,12 @@ module Mousetrap
         :email     => attributes[:email],
         :firstName => attributes[:first_name],
         :lastName  => attributes[:last_name],
-        :company   => attributes[:company]
+        :company   => attributes[:company],
+        :notes     => attributes[:notes]
       }
+
+      mutated_hash.merge!(:charges => attributes[:charges]) if attributes[:charges]
+      mutated_hash.merge!(:items => attributes[:items]) if attributes[:items]
       mutated_hash.merge!(:code => attributes[:code]) if new_record
       mutated_hash
     end
@@ -125,7 +174,8 @@ module Mousetrap
         :first_name => attributes['firstName'],
         :last_name  => attributes['lastName'],
         :company    => attributes['company'],
-        :email      => attributes['email']
+        :email      => attributes['email'],
+        :notes      => attributes['notes']
       }
     end
 

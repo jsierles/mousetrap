@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{mousetrap}
-  s.version = "0.5.1"
+  s.version = "0.6.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jon Larkowski", "Sandro Turriate", "Wolfram Arnold", "Corey Grusden"]
-  s.date = %q{2010-07-10}
+  s.date = %q{2010-09-11}
   s.description = %q{CheddarGetter API Client in Ruby}
   s.email = %q{jonlarkowski@gmail.com}
   s.extra_rdoc_files = [
@@ -18,12 +18,15 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "Gemfile",
+     "Gemfile.lock",
      "MIT-LICENSE",
      "README.textile",
      "Rakefile",
      "VERSION",
      "lib/mousetrap.rb",
      "lib/mousetrap/customer.rb",
+     "lib/mousetrap/invoice.rb",
      "lib/mousetrap/plan.rb",
      "lib/mousetrap/resource.rb",
      "lib/mousetrap/subscription.rb",
@@ -40,7 +43,6 @@ Gem::Specification.new do |s|
      "spec/mousetrap/resource_spec.rb",
      "spec/mousetrap/subscription_spec.rb",
      "spec/mousetrap_spec.rb",
-     "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/support/fixtures.rb",
      "spec/support/random_data.rb"
@@ -48,7 +50,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/hashrocket/mousetrap}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{CheddarGetter API Client in Ruby}
   s.test_files = [
     "spec/factories.rb",
@@ -68,22 +70,22 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<httparty>, [">= 0.6.1"])
       s.add_development_dependency(%q<activesupport>, [">= 2.3.3"])
-      s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
-      s.add_development_dependency(%q<factory_girl>, [">= 1.2.3"])
+      s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
+      s.add_development_dependency(%q<factory_girl>, ["= 1.2.3"])
     else
       s.add_dependency(%q<httparty>, [">= 0.6.1"])
       s.add_dependency(%q<activesupport>, [">= 2.3.3"])
-      s.add_dependency(%q<rspec>, [">= 1.2.9"])
-      s.add_dependency(%q<factory_girl>, [">= 1.2.3"])
+      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
+      s.add_dependency(%q<factory_girl>, ["= 1.2.3"])
     end
   else
     s.add_dependency(%q<httparty>, [">= 0.6.1"])
     s.add_dependency(%q<activesupport>, [">= 2.3.3"])
-    s.add_dependency(%q<rspec>, [">= 1.2.9"])
-    s.add_dependency(%q<factory_girl>, [">= 1.2.3"])
+    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.20"])
+    s.add_dependency(%q<factory_girl>, ["= 1.2.3"])
   end
 end
 

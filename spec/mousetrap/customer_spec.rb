@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Mousetrap::Customer do
   include Fixtures
-  
+
   def customer_attributes_for_api(customer)
     {
       :firstName => customer.first_name,
@@ -10,6 +10,7 @@ describe Mousetrap::Customer do
       :email => customer.email,
       :company => customer.company,
       :code => customer.code,
+      :notes => customer.notes,
       :subscription => {
         :planCode     => customer.subscription.plan_code,
         :ccFirstName  => customer.subscription.billing_first_name,
@@ -17,7 +18,12 @@ describe Mousetrap::Customer do
         :ccNumber     => customer.subscription.credit_card_number,
         :ccExpMonth   => customer.subscription.credit_card_expiration_month,
         :ccExpYear    => customer.subscription.credit_card_expiration_year,
+        :ccCardCode   => customer.subscription.credit_card_code,
         :ccZip        => customer.subscription.billing_zip_code,
+        :ccCountry    => customer.subscription.billing_country,
+        :ccAddress    => customer.subscription.billing_address,
+        :ccCity       => customer.subscription.billing_city,
+        :ccState      => customer.subscription.billing_state
       }
     }
   end
@@ -89,7 +95,8 @@ describe Mousetrap::Customer do
         :first_name => 'Jon',
         :last_name => 'Larkowski',
         :email => 'lark@example.com',
-        :code => 'asfkhw0'
+        :code => 'asfkhw0',
+        :notes => 'Lorem ipsum dolor'
     end
 
     it { should be_instance_of(Mousetrap::Customer) }
@@ -111,6 +118,10 @@ describe Mousetrap::Customer do
       it 'code' do
         subject.code.should == 'asfkhw0'
       end
+
+      it 'notes' do
+        subject.notes.should == 'Lorem ipsum dolor'
+      end
     end
   end
 
@@ -120,7 +131,10 @@ describe Mousetrap::Customer do
     end
 
     it "makes a new customer from the attributes" do
-      Mousetrap::Customer.should_receive(:new).with('some attributes').and_return(stub(:null_object => true))
+      customer = mock
+      customer.stub :update
+      customer.should_receive(:code=).with("some customer code")
+      Mousetrap::Customer.should_receive(:new).with('some attributes').and_return(customer)
       do_update
     end
 
@@ -133,7 +147,8 @@ describe Mousetrap::Customer do
     end
 
     it "calls #update" do
-      customer = mock(:null_object => true)
+      customer = mock
+      customer.should_receive(:code=).with("some customer code")
       Mousetrap::Customer.stub :new => customer
       customer.should_receive :update
       do_update
@@ -319,20 +334,57 @@ describe Mousetrap::Customer do
       end
     end
   end
+
+  describe '#add_custom_charge' do
+    context "when there's a subscription instance" do
+      before :all do
+        @customer = Factory(:new_customer)
+      end
+
+      it "should not raise an error with CheddarGetter" do
+        @customer.class.should_receive(:put_resource).with('customers', 'add-charge', @customer.code, { :eachAmount => 45.00, :chargeCode => 'BOGUS', :quantity => 1, :description => nil }).and_return({ :id => 'some_id' })
+        @customer.add_custom_charge('BOGUS', 45.00, 1, nil)
+      end
+    end
+
+    context "with there is not a subscription" do
+      before :all do
+        @customer = Mousetrap::Customer.new
+      end
+
+      it "should raise an error with CheddarGetter" do
+        @customer.class.stub :put_resource => { 'error' => 'some error message' }
+        expect { @customer.add_custom_charge('BOGUS') }.to raise_error('some error message')
+      end
+    end
+  end
+
+  # describe '#update_tracked_item_quantity' do
+  #   context "when there's a subscription instance" do
+  #     before do
+  #       @customer = Factory(:new_customer)
+  #     end
+  #
+  #     it "should not raise an error with CheddarGetter" do
+  #       @customer.class.should_receive(:put_resource).with('customers', 'add-item-quantity', @customer.code, { :quantity => 1, :itemCode => 'BOGUS' }).and_return({ :id => 'some_id' })
+  #       @customer.update_tracked_item_quantity('BOGUS', 1).should_not raise_error
+  #     end
+  #   end
+  # end
 end
 
 
 __END__
 
-customers: 
-  customer: 
-    company: 
+customers:
+  customer:
+    company:
     lastName: cgejerpkyw
     code: krylmrreef@example.com
-    subscriptions: 
-      subscription: 
-        plans: 
-          plan: 
+    subscriptions:
+      subscription:
+        plans:
+          plan:
             name: Test
             setupChargeAmount: "42.00"
             code: TEST
@@ -348,18 +400,18 @@ customers:
             description: This is my test plan. There are many like it, but this one is mine.
             billingFrequencyPer: month
             setupChargeCode: TEST_SETUP
-        gatewayToken: 
+        gatewayToken:
         id: 7ccea6de-0a4d-102d-a92d-40402145ee8b
         createdDatetime: "2009-10-14T20:08:14+00:00"
         ccType: visa
         ccLastFour: "1111"
         ccExpirationDate: "2012-12-31T00:00:00+00:00"
-        canceledDatetime: 
-        invoices: 
-          invoice: 
+        canceledDatetime:
+        invoices:
+          invoice:
           - number: "5"
-            transactions: 
-              transaction: 
+            transactions:
+              transaction:
                 response: approved
                 code: ""
                 amount: "42.00"
@@ -367,17 +419,17 @@ customers:
                 id: 7ce53c78-0a4d-102d-a92d-40402145ee8b
                 createdDatetime: "2009-10-14T20:08:14+00:00"
                 transactedDatetime: "2009-10-14T20:08:14+00:00"
-                parentId: 
-                charges: 
-                  charge: 
+                parentId:
+                charges:
+                  charge:
                     code: TEST_SETUP
                     quantity: "1"
                     id: 7ce2cb6e-0a4d-102d-a92d-40402145ee8b
                     createdDatetime: "2009-10-14T20:08:14+00:00"
                     type: setup
                     eachAmount: "42.00"
-                    description: 
-                gatewayAccount: 
+                    description:
+                gatewayAccount:
                   id: ""
             billingDatetime: "2009-10-14T20:08:14+00:00"
             id: 7cd25072-0a4d-102d-a92d-40402145ee8b
@@ -388,7 +440,7 @@ customers:
             id: 7cd4253c-0a4d-102d-a92d-40402145ee8b
             createdDatetime: "2009-10-14T20:08:14+00:00"
             type: subscription
-    gatewayToken: 
+    gatewayToken:
     id: 7ccd6e5e-0a4d-102d-a92d-40402145ee8b
     createdDatetime: "2009-10-14T20:08:14+00:00"
     modifiedDatetime: "2009-10-14T20:08:14+00:00"

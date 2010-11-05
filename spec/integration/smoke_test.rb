@@ -1,8 +1,11 @@
 require File.expand_path('../../../lib/mousetrap', __FILE__)
 
-require 'spec'
-require 'spec/autorun'
-require 'factory_girl'
+require "bundler"
+Bundler.setup
+
+require 'factories'
+
+require 'rspec'
 require 'active_support'
 require 'yaml'
 
@@ -12,7 +15,7 @@ settings = YAML.load_file(File.dirname(__FILE__) + '/settings.yml')
 Mousetrap.authenticate(settings['user'], settings['password'])
 Mousetrap.product_code = settings['product_code']
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.before :suite do
     begin
       Mousetrap::Customer.destroy_all
@@ -109,6 +112,16 @@ describe "The Wrapper Gem" do
       describe "When I create a customer" do
         before :all do
           attributes = Factory.attributes_for :new_customer
+          @customer = Mousetrap::Customer.create attributes
+        end
+
+        it_should_behave_like "a Customer record from CheddarGetter"
+        it_should_behave_like "an active Subscription record from CheddarGetter"
+      end
+
+      describe "When I create a customer with international card" do
+        before :all do
+          attributes = Factory.attributes_for :alt_new_customer
           @customer = Mousetrap::Customer.create attributes
         end
 

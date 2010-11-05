@@ -2,7 +2,7 @@
 
 require File.dirname(__FILE__) + '/../../lib/mousetrap'
 require 'activesupport'
-require 'factory_girl'
+require 'factories'
 require 'ruby-debug'
 require 'yaml'
 

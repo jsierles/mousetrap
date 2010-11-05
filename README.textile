@@ -19,7 +19,8 @@ that you create.
 # Set up a CheddarGetter account.
 # Add a Product with a code named:  @MOUSETRAP_TEST@
 # Add a Plan with a code named:  @TEST@
+# Add another Plan with a code named:  @TEST_2@
 # Put your credentials into a _spec/integration/settings.yml_ file.
-# Run the tests with: @spec -c -fn spec/integration/smoke_test.rb@
+# Run the tests with: @rspec spec/integration/smoke_test.rb@
 
 Copyright (c) 2009 Hashrocket. See MIT-LICENSE for details.
