@@ -11,6 +11,7 @@ describe Mousetrap::Customer do
       :company => customer.company,
       :code => customer.code,
       :notes => customer.notes,
+      :isVatExempt => customer.is_vat_exempt ? 1 : 0,
       :subscription => {
         :planCode       => customer.subscription.plan_code,
         :ccFirstName    => customer.subscription.billing_first_name,

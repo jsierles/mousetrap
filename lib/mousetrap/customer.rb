@@ -10,7 +10,8 @@ module Mousetrap
       :notes,
       :subscription,
       :charges,
-      :items
+      :items,
+      :is_vat_exempt
 
     def update_tracked_item_quantity(item_code, quantity = 1)
       tracked_item_resource = if quantity == quantity.abs
@@ -57,15 +58,16 @@ module Mousetrap
 
     def attributes
       {
-        :id         => id,
-        :code       => code,
-        :email      => email,
-        :first_name => first_name,
-        :last_name  => last_name,
-        :company    => company,
-        :notes      => notes,
-        :charges    => charges,
-        :items      => items
+        :id            => id,
+        :code          => code,
+        :email         => email,
+        :first_name    => first_name,
+        :last_name     => last_name,
+        :company       => company,
+        :notes         => notes,
+        :charges       => charges,
+        :items         => items,
+        :is_vat_exempt => is_vat_exempt
       }
     end
 
@@ -158,7 +160,8 @@ module Mousetrap
         :firstName => attributes[:first_name],
         :lastName  => attributes[:last_name],
         :company   => attributes[:company],
-        :notes     => attributes[:notes]
+        :notes     => attributes[:notes],
+        :isVatExempt => attributes[:is_vat_exempt] ? 1 : 0
       }
 
       mutated_hash.merge!(:charges => attributes[:charges]) if attributes[:charges]
@@ -169,13 +172,14 @@ module Mousetrap
 
     def self.attributes_from_api(attributes)
       {
-        :id         => attributes['id'],
-        :code       => attributes['code'],
-        :first_name => attributes['firstName'],
-        :last_name  => attributes['lastName'],
-        :company    => attributes['company'],
-        :email      => attributes['email'],
-        :notes      => attributes['notes']
+        :id            => attributes['id'],
+        :code          => attributes['code'],
+        :first_name    => attributes['firstName'],
+        :last_name     => attributes['lastName'],
+        :company       => attributes['company'],
+        :email         => attributes['email'],
+        :notes         => attributes['notes'],
+        :is_vat_exempt => attributes['isVatExempt'].to_i == 1
       }
     end
 

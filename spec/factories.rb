@@ -6,6 +6,7 @@ Factory.define :new_customer, :class => Mousetrap::Customer, :default_strategy =
   f.last_name { random_string }
   f.company { random_string }
   f.code { |me| me.email }
+  f.is_vat_exempt true
   f.add_attribute :id, nil
   f.subscription_attributes { Factory.attributes_for :subscription }
 end
