@@ -12,18 +12,19 @@ describe Mousetrap::Customer do
       :code => customer.code,
       :notes => customer.notes,
       :subscription => {
-        :planCode     => customer.subscription.plan_code,
-        :ccFirstName  => customer.subscription.billing_first_name,
-        :ccLastName   => customer.subscription.billing_last_name,
-        :ccNumber     => customer.subscription.credit_card_number,
-        :ccExpMonth   => customer.subscription.credit_card_expiration_month,
-        :ccExpYear    => customer.subscription.credit_card_expiration_year,
-        :ccCardCode   => customer.subscription.credit_card_code,
-        :ccZip        => customer.subscription.billing_zip_code,
-        :ccCountry    => customer.subscription.billing_country,
-        :ccAddress    => customer.subscription.billing_address,
-        :ccCity       => customer.subscription.billing_city,
-        :ccState      => customer.subscription.billing_state
+        :planCode       => customer.subscription.plan_code,
+        :ccFirstName    => customer.subscription.billing_first_name,
+        :ccLastName     => customer.subscription.billing_last_name,
+        :ccNumber       => customer.subscription.credit_card_number,
+        :ccExpMonth     => customer.subscription.credit_card_expiration_month,
+        :ccExpYear      => customer.subscription.credit_card_expiration_year,
+        :ccCardCode     => customer.subscription.credit_card_code,
+        :ccZip          => customer.subscription.billing_zip_code,
+        :ccCountry      => customer.subscription.billing_country,
+        :ccAddress      => customer.subscription.billing_address,
+        :ccCity         => customer.subscription.billing_city,
+        :ccState        => customer.subscription.billing_state,
+        :changeBillDate => customer.subscription.change_bill_date
       }
     }
   end

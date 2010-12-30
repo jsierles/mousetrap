@@ -15,6 +15,7 @@ module Mousetrap
       :billing_state,
       :billing_zip_code,
       :plan,
+      :change_bill_date
 
       :customer_code # belongs to customer
 
@@ -70,6 +71,7 @@ module Mousetrap
         :billing_city                 => billing_city,
         :billing_state                => billing_state,
         :billing_zip_code             => billing_zip_code,
+        :change_bill_date             => change_bill_date
       }
     end
 
@@ -130,18 +132,19 @@ module Mousetrap
 
     def self.attributes_for_api(attributes)
       {
-        :planCode     => attributes[:plan_code],
-        :ccFirstName  => attributes[:billing_first_name],
-        :ccLastName   => attributes[:billing_last_name],
-        :ccNumber     => attributes[:credit_card_number],
-        :ccExpMonth   => ("%02d" % attributes[:credit_card_expiration_month] if attributes[:credit_card_expiration_month]),
-        :ccExpYear    => attributes[:credit_card_expiration_year],
-        :ccCardCode   => attributes[:credit_card_code],
-        :ccCountry    => attributes[:billing_country],
-        :ccAddress    => attributes[:billing_address],
-        :ccCity       => attributes[:billing_city],
-        :ccState      => attributes[:billing_state],
-        :ccZip        => attributes[:billing_zip_code]
+        :planCode       => attributes[:plan_code],
+        :ccFirstName    => attributes[:billing_first_name],
+        :ccLastName     => attributes[:billing_last_name],
+        :ccNumber       => attributes[:credit_card_number],
+        :ccExpMonth     => ("%02d" % attributes[:credit_card_expiration_month] if attributes[:credit_card_expiration_month]),
+        :ccExpYear      => attributes[:credit_card_expiration_year],
+        :ccCardCode     => attributes[:credit_card_code],
+        :ccCountry      => attributes[:billing_country],
+        :ccAddress      => attributes[:billing_address],
+        :ccCity         => attributes[:billing_city],
+        :ccState        => attributes[:billing_state],
+        :ccZip          => attributes[:billing_zip_code],
+        :changeBillDate => attributes[:change_bill_date],
       }
     end
 
