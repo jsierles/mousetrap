@@ -5,7 +5,15 @@ module Mousetrap
       :number,
       :billing_date,
       :vat_rate,
-      :created_at
+      :created_at,
+      :transactions
+
+    def self.new_from_api(attributes)
+      invoice = new(attributes_from_api(attributes))
+      invoice.transactions = attributes['transactions'] ?
+        Transaction.build_resources_from(attributes) : []
+      invoice
+    end
 
     protected
 

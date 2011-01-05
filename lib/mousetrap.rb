@@ -13,6 +13,7 @@ module Mousetrap
   autoload :Plan,         'mousetrap/plan'
   autoload :Resource,     'mousetrap/resource'
   autoload :Invoice,      'mousetrap/invoice'
+  autoload :Transaction,  'mousetrap/transaction'
   autoload :Subscription, 'mousetrap/subscription'
 
   class << self
