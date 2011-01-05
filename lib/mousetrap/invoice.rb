@@ -4,6 +4,7 @@ module Mousetrap
       :id,
       :number,
       :billing_date,
+      :vat_rate,
       :created_at
 
     protected
