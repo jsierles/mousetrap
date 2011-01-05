@@ -47,13 +47,7 @@ module Mousetrap
     end
 
     def current_invoice
-      invoice_attributes = if invoices['invoice'].kind_of?(Array)
-        invoices['invoice'][0]
-      else
-        invoices['invoice']
-      end
-
-      Invoice.new(invoice_attributes)
+      invoices[0]
     end
 
     def attributes
@@ -90,6 +84,7 @@ module Mousetrap
     def self.new_from_api(attributes)
       subscription = new(attributes_from_api(attributes))
       subscription.plan = Plan.new_from_api(attributes['plans']['plan'])
+      subscription.send :invoices=, Invoice.build_resources_from(attributes)
       subscription
     end
 
