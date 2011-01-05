@@ -69,7 +69,7 @@ module Mousetrap
       response_resources = extract_resources(response)
 
       if response_resources.is_a?(Array)
-        extract_resources(response).each do |resource_attributes|
+        response_resources.each do |resource_attributes|
           resources << new_from_api(resource_attributes)
         end
       else
