@@ -3,9 +3,10 @@ module Mousetrap
     attr_accessor \
       :id,
       :number,
+      :created_at,
       :billing_date,
       :vat_rate,
-      :created_at,
+      :paid_transaction_id,
       :transactions
 
     def self.new_from_api(attributes)
@@ -13,6 +14,10 @@ module Mousetrap
       invoice.transactions = attributes['transactions'] ?
         Transaction.build_resources_from(attributes) : []
       invoice
+    end
+
+    def paid?
+      @paid_transaction_id.present?
     end
 
     protected
@@ -27,11 +32,12 @@ module Mousetrap
 
     def self.attributes_from_api(attributes)
       {
-        :id           => attributes['id'],
-        :number       => attributes['number'],
-        :billing_date => attributes['billingDatetime'],
-        :created_at   => attributes['createdDatetime'],
-        :vat_rate     => attributes['vatRate'],
+        :id                  => attributes['id'],
+        :number              => attributes['number'],
+        :created_at          => attributes['createdDatetime'],
+        :billing_date        => attributes['billingDatetime'],
+        :vat_rate            => attributes['vatRate'],
+        :paid_transaction_id => attributes['paidTransactionId'],
       }
     end
   end
